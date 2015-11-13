@@ -1,5 +1,7 @@
 package com.diginori.danajjang;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
 
+    AlertDialog.Builder alert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
         etContent = (EditText) findViewById(R.id.editText);
         btnOK = (Button) findViewById(R.id.btn_ok);
 
+        alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();     //닫기
+            }
+        });
+
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,9 +51,18 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("제목:" + s);
                 System.out.println("내용:" + c);
 
-                editor.putString("etSubject",s);
-                editor.putString("etContent",c);
-                editor.commit();
+                editor.putString("etSubject", s);
+                editor.putString("etContent", c);
+
+
+
+                if(editor.commit()){
+                    alert.setMessage("성공");
+                }else{
+                    alert.setMessage("실패");
+                }
+
+                alert.show();
             }
         });
 
