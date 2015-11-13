@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText etSbject;
+    private EditText etSubject;
     private EditText etContent;
     private Button btnOK;
 
@@ -26,21 +26,22 @@ public class MainActivity extends AppCompatActivity {
         pref = getSharedPreferences("my_note_file", MODE_PRIVATE);
         editor = pref.edit();
 
-        etSbject = (EditText) findViewById(R.id.et_subject_fmain);
+        etSubject = (EditText) findViewById(R.id.et_subject_fmain);
         etContent = (EditText) findViewById(R.id.editText);
         btnOK = (Button) findViewById(R.id.btn_ok);
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String s = etSbject.getText().toString();
+                String s = etSubject.getText().toString();
                 String c = etContent.getText().toString();
 
                 System.out.println("제목:" + s);
                 System.out.println("내용:" + c);
 
-                editor.putString("키_제목",s);
-                editor.putString("키_내용",c);
+                editor.putString("etSubject",s);
+                editor.putString("etContent",c);
+                editor.commit();
             }
         });
 
@@ -74,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         System.out.println("나켜짐");
 
-        String s = pref.getString("키_제목", "공백");
-        String c = pref.getString("키_내용", "공백");
+        String s = pref.getString("etSubject", "-");
+        String c = pref.getString("etContent", "-");
 
-        etSbject.setText(s);
+        etSubject.setText(s);
         etContent.setText(c);
     }
 
